@@ -12,6 +12,8 @@ public class GenSpace : MonoBehaviour {
 	public float minimumSeparation = 10;
 	List<Vector2> existingAsteroids = new List<Vector2>();
 
+	public GameObject blackHole;
+
 	class Chunk {
 		public Vector2 center;
 		public GenSpace parent;
@@ -39,6 +41,18 @@ public class GenSpace : MonoBehaviour {
 				var go = GameObject.Instantiate(parent.asteroids[type], p, Quaternion.Euler(0, 0, Random.Range(0f, 360f))) as GameObject;
 				go.transform.localScale = Vector3.one * scale;
 				parent.existingAsteroids.Add(p);
+			}
+
+			for (int i = 0; i < 1; i++) {
+				var p = new Vector2(Random.value*parent.chunkSize - parent.chunkSize*0.5f, Random.Range(0.2f, 0.5f) * parent.chunkSize) + center;
+				var b1 = GameObject.Instantiate(parent.blackHole, p, Quaternion.identity) as GameObject;
+				p = new Vector2(Random.value*parent.chunkSize - parent.chunkSize*0.5f, -Random.Range(0.2f, 0.5f) * parent.chunkSize) + center;
+				var b2 = GameObject.Instantiate(parent.blackHole, p, Quaternion.identity) as GameObject;
+
+				var hole1 = b1.GetComponent<BlackHole>();
+				var hole2 = b2.GetComponent<BlackHole>();
+				hole1.connection = hole2;
+				hole2.connection = hole1;
 			}
 		}
 	}
