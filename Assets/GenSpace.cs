@@ -13,6 +13,7 @@ public class GenSpace : MonoBehaviour {
 	List<Vector2> existingAsteroids = new List<Vector2>();
 
 	public GameObject blackHole;
+	public GameObject blackHoleConnection;
 
 	class Chunk {
 		public Vector2 center;
@@ -53,6 +54,13 @@ public class GenSpace : MonoBehaviour {
 				var hole2 = b2.GetComponent<BlackHole>();
 				hole1.connection = hole2;
 				hole2.connection = hole1;
+
+				var conn = GameObject.Instantiate(parent.blackHoleConnection, b1.transform.position, Quaternion.LookRotation(Vector3.forward, b2.transform.position - b1.transform.position)) as GameObject;
+				var connComp = conn.GetComponentsInChildren<BlackConnection>();
+				foreach (var c in connComp) {
+					c.start = hole1;
+					c.end = hole2;
+				}
 			}
 		}
 	}
