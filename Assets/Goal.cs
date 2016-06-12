@@ -4,7 +4,7 @@ using System.Collections;
 public class Goal : MonoBehaviour {
 
 	public ParticleSystem particles;
-	public Character player;
+	public Spaceship player;
 	public GameObject goalText;
 
 	public void OnTriggerEnter2D (Collider2D coll) {
@@ -17,6 +17,7 @@ public class Goal : MonoBehaviour {
 	public void OnReachedGoal () {
 		particles.Play();
 		player.movementEnabled = false;
+		Time.timeScale = 0;
 		goalText.SetActive(true);
 	}
 }

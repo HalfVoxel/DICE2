@@ -20,7 +20,11 @@ public class BlackConnection : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
+		if (end == null || start == null) {
+			GameObject.Destroy(gameObject);
+		}
+
 		var count = particles.GetParticles(pts);
 		var totalDir = (Vector2)end.transform.position - (Vector2)start.transform.position;
 		var normal = new Vector2(-totalDir.y, totalDir.x).normalized;

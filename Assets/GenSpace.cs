@@ -55,7 +55,13 @@ public class GenSpace : MonoBehaviour {
 				hole1.connection = hole2;
 				hole2.connection = hole1;
 
-				var conn = GameObject.Instantiate(parent.blackHoleConnection, b1.transform.position, Quaternion.LookRotation(Vector3.forward, b2.transform.position - b1.transform.position)) as GameObject;
+				if (hole1.transform.position.x > hole2.transform.position.x) {
+					var tmp = hole1;
+					hole1 = hole2;
+					hole2 = tmp;
+				}
+
+				var conn = GameObject.Instantiate(parent.blackHoleConnection, hole1.transform.position, Quaternion.LookRotation(Vector3.forward, hole2.transform.position - hole1.transform.position)) as GameObject;
 				var connComp = conn.GetComponentsInChildren<BlackConnection>();
 				foreach (var c in connComp) {
 					c.start = hole1;

@@ -17,6 +17,17 @@ public class BlackHole : MonoBehaviour {
 			if (ship != null) {
 				ship.TryTeleportTo(this, connection);
 			}
+
+			var asteroid = coll.transform.GetComponent<Asteroid>();
+			if (asteroid != null) {
+				asteroid.TryTeleportTo(this, connection);
+			}
+		}
+	}
+
+	void Update () {
+		if (transform.position.x < Camera.main.transform.position.x - 400) {
+			GameObject.Destroy(gameObject);
 		}
 	}
 
